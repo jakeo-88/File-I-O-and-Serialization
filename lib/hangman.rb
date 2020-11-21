@@ -1,10 +1,8 @@
-tester = File.readlines "5desk.txt"
+dictionary = File.readlines "5desk.txt"
 
-tester.each do |word| 
-  puts word
-end
-
-# retrieve a random word from list
+# retrieve a random word from list (61407 words!)
+word = dictionary.sample
+puts word
 
 # display underscores for each letter of the word AND display hangman picture
 
