@@ -11,8 +11,11 @@ word.map {|i| hidden_letters.push("_")}
 print hidden_letters
 puts ""
 
+incorrect_guesses = 0
 # run multiple rounds
-until hidden_letters == word do
+until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
+  puts incorrect_guesses
+  changes = 0 
   # prompt the player to enter a letter
   puts "This is a test round of my hangman game! ENTER a lowercase LETTER \n"
   letter_guess = gets.chomp
@@ -21,12 +24,15 @@ until hidden_letters == word do
   while i < word.length do 
     if letter_guess == word[i] then
       hidden_letters[i] = letter_guess
+      changes += 1
     end
+    p changes
     i += 1
   end
+  incorrect_guesses += 1 if changes == 0
   puts ""
   print hidden_letters
-  puts ""
+  puts "Incorrect guesses #{incorrect_guesses}"
 end
 # if a letter doesn't match any from the word, add another piece of the "hang man"
 
