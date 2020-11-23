@@ -8,8 +8,6 @@ remove_last_two = word.pop(2)
 # display underscores for each letter of the word AND display hangman picture
 hidden_letters = Array.new
 word.map {|i| hidden_letters.push("_")}
-print hidden_letters
-puts ""
 
 incorrect_guesses = 0
 
@@ -19,6 +17,18 @@ load_answer = gets.chomp
 until ( (load_answer == 'y') || (load_answer == 'n') ) do
   puts "That's not a valid choice. Choose 'y' or 'n'."
 end
+if load_answer == 'y' then
+  saved_file = File.readlines "save_file.txt"
+  saved_file = saved_file.join("")
+  saved_file = saved_file.split("")
+  saved_file_cleanup = saved_file.pop(1)
+  incorrect_guesses = saved_file.join("").to_i
+
+end
+
+print hidden_letters
+print "Incorrect guesses #{incorrect_guesses}" 
+puts ""
 
 # run multiple rounds
 until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
@@ -56,7 +66,7 @@ until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
     fd = IO.sysopen('/home/jakeo/the_odin_project/files-and-serialization/File-I-O-and-Serialization/save_file.txt', "w")
     a = IO.new(fd, "w")
     a.puts incorrect_guesses
-    a.print hidden_letters
+    
     break
   end
 end
