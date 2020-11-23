@@ -46,7 +46,7 @@ until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
     break
   end
 
-  puts "Save progress? (y/n)"
+  puts "Save progress and exit? (y/n)"
   save_answer = gets.chomp
   until ( (save_answer == "y") || (save_answer == "n") ) do 
     puts "That's not a valid choice. Choose 'y' or 'n'."
@@ -57,6 +57,7 @@ until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
     a = IO.new(fd, "w")
     a.puts incorrect_guesses
     a.print hidden_letters
+    break
   end
 end
 # if a letter doesn't match any from the word, add another piece of the "hang man"
