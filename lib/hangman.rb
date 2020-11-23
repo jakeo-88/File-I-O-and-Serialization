@@ -12,6 +12,14 @@ print hidden_letters
 puts ""
 
 incorrect_guesses = 0
+
+# give option to load game
+puts "load previous game? (y/n)"
+load_answer = gets.chomp
+until ( (load_answer == 'y') || (load_answer == 'n') ) do
+  puts "That's not a valid choice. Choose 'y' or 'n'."
+end
+
 # run multiple rounds
 until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
   changes = 0 
@@ -32,14 +40,19 @@ until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
   puts ""
   print hidden_letters
   puts "Incorrect guesses #{incorrect_guesses}"
+  
+  if incorrect_guesses == 6 then
+    puts "That's game!"
+    break
+  end
 
   puts "Save progress? (y/n)"
-  answer = gets.chomp
-  until ( (answer == "y") || (answer == "n") ) do 
-    puts "Not a valid choice, enter 'y' or 'n'."
-    answer = gets.chomp
+  save_answer = gets.chomp
+  until ( (save_answer == "y") || (save_answer == "n") ) do 
+    puts "That's not a valid choice. Choose 'y' or 'n'."
+    save_answer = gets.chomp
   end
-  if answer == "y" then
+  if save_answer == "y" then
     fd = IO.sysopen('/home/jakeo/the_odin_project/files-and-serialization/File-I-O-and-Serialization/save_file.txt', "w")
     a = IO.new(fd, "w")
     a.puts incorrect_guesses
