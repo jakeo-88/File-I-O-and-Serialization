@@ -5,6 +5,10 @@ word = list.sample
 word = word.split("")
 remove_last_two = word.pop(2)
 
+word = word.join("")
+word.downcase!
+word = word.split("")
+
 # display underscores for each letter of the word AND display hangman picture
 hidden_letters = Array.new
 word.map {|i| hidden_letters.push("_")}
@@ -19,22 +23,22 @@ until ( (load_answer == 'y') || (load_answer == 'n') ) do
 end
 if load_answer == 'y' then
   saved_file = File.readlines "save_file.txt"
-  saved_file = saved_file.join("")
-  saved_file = saved_file.split("")
-  saved_file_cleanup = saved_file.pop(1)
-  incorrect_guesses = saved_file.join("").to_i
-
+  saved_file = saved_file.join("").split(",")
+  
+  incorrect_guesses = saved_file[0].to_i
+  word = saved_file[1].split("")
+  hidden_letters = saved_file[2].split("")
 end
 
 print hidden_letters
-print "Incorrect guesses #{incorrect_guesses}" 
+print " Incorrect guesses #{incorrect_guesses}" 
 puts ""
 
 # run multiple rounds
 until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
   changes = 0 
   # prompt the player to enter a letter
-  puts "This is a test round of my hangman game! ENTER a lowercase LETTER \n"
+  puts "Let's play hangman! ENTER a lowercase LETTER \n"
   letter_guess = gets.chomp
   # if a letter enter matches one from the word, display it instead of the underscore
   i = 0 
@@ -49,9 +53,9 @@ until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
   incorrect_guesses += 1 if changes == 0
   puts ""
   print hidden_letters
-  puts "Incorrect guesses #{incorrect_guesses}"
+  puts " Incorrect guesses #{incorrect_guesses}"
   
-  if incorrect_guesses == 6 then
+  if ( (incorrect_guesses == 6) || (hidden_letters == word) ) then
     puts "That's game!"
     break
   end
@@ -65,7 +69,7 @@ until ( (hidden_letters == word) || (incorrect_guesses == 6) ) do
   if save_answer == "y" then
     fd = IO.sysopen('/home/jakeo/the_odin_project/files-and-serialization/File-I-O-and-Serialization/save_file.txt', "w")
     a = IO.new(fd, "w")
-    a.puts incorrect_guesses
+    a.print "#{incorrect_guesses},#{word.join("")},#{hidden_letters.join("")}"
     
     break
   end
